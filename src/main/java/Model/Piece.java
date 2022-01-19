@@ -43,8 +43,8 @@ public class Piece {
             FileInputStream input = new FileInputStream("src\\resources\\Visuals\\png\\"+color.name+
                     "\\"+type.name+".png");
             this.image = new ImageView(new Image(input));
-            image.setFitWidth(40);
-            image.setFitHeight(40);
+            image.setFitWidth(50);
+            image.setFitHeight(50);
         }catch (Exception e){
             System.out.println("Can\'t find the resources");
         }

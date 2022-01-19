@@ -1,50 +1,69 @@
 package Model;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
-import javafx.scene.effect.Effect;
-import javafx.scene.effect.Glow;
-import javafx.scene.effect.Shadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
+public class Cell {
+    public static Cell selectedCell;
 
-import javax.swing.event.HyperlinkEvent;
-import java.awt.*;
-import java.util.logging.Handler;
 
-public class Cell implements EventHandler {
     private Piece piece;
-    private boolean isSelected;
-    private StackPane StackPane;
-    public Cell(StackPane StackPane){
-        this.StackPane=StackPane;
-        this.isSelected=false;
+    private StackPane stackPane;
+    private Rectangle rectangle;
+    private int[] coordinates;
+    private Board board;
+
+    public Cell(StackPane stackPane, int[] coordinates) {
+        this.stackPane = stackPane;
+        this.rectangle = (Rectangle) stackPane.getChildren().get(0);
+        this.coordinates = coordinates;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        StackPane.getChildren().add(piece.image);
-        piece.image.addEventHandler(MouseEvent.MOUSE_CLICKED,new EventHandler<MouseEvent>() {
+        stackPane.getChildren().add(piece.image);
+        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                ImageView image= (ImageView) mouseEvent.getSource();
-                Rectangle rectangle=(Rectangle) image.getParent().getChildrenUnmodifiable().get(0);
-                rectangle.opacityProperty().set(1);
-                rectangle.setFill(Color.CHARTREUSE);
+                try {
+                    Cell cell = board.findCell(coordinates[0], coordinates[1]);
+                    if(Cell.selectedCell==cell)Cell.deselectCell();
+                    else {
+                        Cell.deselectCell();
+                        selectCell(cell);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
+    public int[] getCoordinates() {
+        return coordinates;
+    }
 
-    @Override
-    public void handle(Event event) {
-        System.out.println("we are here");
+    public static void deselectCell() {
+        if (Cell.selectedCell==null)return;
+        Cell.selectedCell.rectangle.setOpacity(0);
+        Cell.selectedCell = null;
+    }
+
+    public void selectCell(Cell cell) {
+        Piece.Color selectedColor=board.getGame().getCurrentTurnColor();
+        if (piece.color!=selectedColor){
+            return;
+        }
+        rectangle.opacityProperty().set(0.5);
+        rectangle.setFill(Color.CHARTREUSE);
+        selectedCell = cell;
+        //todo: color some cells depending on the piece in the selected cell
     }
 }
