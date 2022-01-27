@@ -23,15 +23,15 @@ public class Board {
     public ArrayList<Cell> getCells() {
         return cells;
     }
-    public Cell findCell(int i,int j) throws Exception{
+    public Cell findCell(int cor[]) throws Exception{
         for (Cell cell:cells){
             int[]coordinate=cell.getCoordinates();
             int x=coordinate[0];
             int y=coordinate[1];
-            if (x==i && j==y){
+            if (x==cor[0] && y==cor[1]){
                 return cell;
             }
         }
-        throw new Exception(String.format("cell not found with coordination {%d} , {%d}",i,j ));
+        throw new Exception(String.format("cell not found with coordination {%d,%d}",cor[0],cor[1] ));
     }
 }

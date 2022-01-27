@@ -3,18 +3,19 @@ package Model;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell {
     public static Cell selectedCell;
 
 
-    private Piece piece;
-    private StackPane stackPane;
-    private Rectangle rectangle;
-    private int[] coordinates;
-    private Board board;
+    public Piece piece;
+    public StackPane stackPane;
+    public Rectangle rectangle;
+    public EventHandler<MouseEvent> selectEventHandler;
+    public EventHandler<MouseEvent>moveEventHandler;
+    public int[] coordinates;
+    public Board board;
 
     public Cell(StackPane stackPane, int[] coordinates) {
         this.stackPane = stackPane;
@@ -29,21 +30,13 @@ public class Cell {
     public void setPiece(Piece piece) {
         this.piece = piece;
         stackPane.getChildren().add(piece.image);
-        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                try {
-                    Cell cell = board.findCell(coordinates[0], coordinates[1]);
-                    if(Cell.selectedCell==cell)Cell.deselectCell();
-                    else {
-                        Cell.deselectCell();
-                        selectCell(cell);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    }
+    public void removePiece(){
+        this.piece=null;
+    }
+
+    public StackPane getStackPane() {
+        return stackPane;
     }
 
     public int[] getCoordinates() {
@@ -56,14 +49,41 @@ public class Cell {
         Cell.selectedCell = null;
     }
 
-    public void selectCell(Cell cell) {
-        Piece.Color selectedColor=board.getGame().getCurrentTurnColor();
-        if (piece.color!=selectedColor){
-            return;
-        }
-        rectangle.opacityProperty().set(0.5);
-        rectangle.setFill(Color.CHARTREUSE);
-        selectedCell = cell;
-        //todo: color some cells depending on the piece in the selected cell
+    public void selectCell() {
+        selectedCell = this;
     }
+
+    public Piece getPiece() {
+        return piece;
+    }
+
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public boolean hasPiece(){
+        return this.piece!=null;
+    }
+
+    public void setSelectEventHandler(EventHandler<MouseEvent> selectEventHandler) {
+        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
+        this.selectEventHandler= selectEventHandler;
+    }
+
+    public void setMoveEventHandler(EventHandler<MouseEvent> moveEventHandler) {
+        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
+        this.moveEventHandler=moveEventHandler;
+    }
+    public void removeSelectEventHandler(){
+        if(selectEventHandler!=null) {
+            stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
+            this.selectEventHandler = null;
+        }
+    }
+
+    public void removeMoveEventHandler(){
+        stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
+        this.moveEventHandler=null;
+    }
+
 }

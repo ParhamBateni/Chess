@@ -17,4 +17,8 @@ public class Game {
     public Piece.Color getCurrentTurnColor() {
         return currentTurnColor;
     }
+
+    public void setCurrentTurnColor(Piece.Color currentTurnColor) {
+        this.currentTurnColor = currentTurnColor;
+    }
 }
