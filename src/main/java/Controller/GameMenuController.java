@@ -38,9 +38,7 @@ public class GameMenuController implements Initializable {
         Sound.play(Sound.SoundType.START);
         try {
             Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        } catch (InterruptedException e) {}
         this.gameController = new GameController(new Game(new Board(cells)),boardPane);
 
     }

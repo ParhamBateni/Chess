@@ -32,6 +32,7 @@ public class Cell {
         stackPane.getChildren().add(piece.image);
     }
     public void removePiece(){
+        stackPane.getChildren();
         this.piece=null;
     }
 

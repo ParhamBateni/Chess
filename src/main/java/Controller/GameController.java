@@ -456,7 +456,12 @@ public class GameController {
                 Rectangle rectangleChoice = cellChoice.getRectangle();
                 cellChoices.add(cellChoice);
                 rectangleChoice.setOpacity(0.5);
-                rectangleChoice.setFill(Color.YELLOW);
+                if(cellChoice.hasPiece()){
+                    rectangleChoice.setFill(Color.RED);
+                }
+                else {
+                    rectangleChoice.setFill(Color.YELLOW);
+                }
             } catch (Exception e) {
                 continue;
             }
@@ -469,10 +474,13 @@ public class GameController {
             EventHandler moveHandler = new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    Sound.play(Sound.SoundType.MOVE);
+                    if(cellChoice.hasPiece()){
+                        Sound.play(Sound.SoundType.CAPTURE);
+                    }else Sound.play(Sound.SoundType.MOVE);
                     try {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {}
+                    if(cellChoice.hasPiece()) cellChoice.removePiece();
                     cellChoice.setPiece(Cell.selectedCell.piece);
                     Cell.selectedCell.removePiece();
                     Cell.selectedCell.removeSelectEventHandler();
