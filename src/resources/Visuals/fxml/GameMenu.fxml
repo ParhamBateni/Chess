@@ -2,361 +2,364 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controller.GameMenuController">
+    <children>
+        <Pane fx:id="boardPane">
+        <ImageView fitHeight="420.0" fitWidth="420.0" layoutX="100.0" layoutY="5.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@../png/chessBoard.png"/>
+            </image>
+        </ImageView>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GameMenuController">
-   <children>
-      <ImageView fitHeight="420.0" fitWidth="420.0" layoutX="100.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../png/chessBoard.png" />
-         </image></ImageView>
-      <GridPane fx:id="boardPane" layoutX="100" layoutY="5.0" prefHeight="420.0" prefWidth="420.0">
-        <columnConstraints>
-          <ColumnConstraints prefWidth="60.0" />
-          <ColumnConstraints prefWidth="60.0" />
-            <ColumnConstraints prefWidth="60.0" />
-            <ColumnConstraints prefWidth="60.0" />
-            <ColumnConstraints prefWidth="60.0" />
-            <ColumnConstraints prefWidth="60.0" />
-            <ColumnConstraints prefWidth="60.0" />
-            <ColumnConstraints prefWidth="60.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints prefHeight="60.0" />
-          <RowConstraints prefHeight="60.0" />
-          <RowConstraints prefHeight="60.0" />
-            <RowConstraints prefHeight="60.0" />
-            <RowConstraints prefHeight="60.0" />
-            <RowConstraints prefHeight="60.0" />
-            <RowConstraints prefHeight="60.0" />
-            <RowConstraints prefHeight="60.0" />
-        </rowConstraints>
-         <children>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" opacity="0" width="53.0" />
-               </children></StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="54.0" />
-                </children>
-            </StackPane>
-             <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
-                 <children>
-                     <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                 </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="55.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
-             <children>
-                 <Rectangle height="52.0" opacity="0.0" width="55.0" />
-             </children>
-             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="55.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="55.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-             </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-            <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
-                <children>
-                    <Rectangle height="52.0" opacity="0.0" width="52.0" />
-                </children>
-            </StackPane>
-         </children>
-      </GridPane>
-   </children>
+        <GridPane fx:id="boardGridPane" layoutX="100" layoutY="5.0" prefHeight="420.0" prefWidth="420.0">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+                <ColumnConstraints prefWidth="60.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+                <RowConstraints prefHeight="60.0"/>
+            </rowConstraints>
+            <children>
+                <StackPane prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="53.0" opacity="0" width="53.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="54.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="55.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="55.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="3">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="55.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="4">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="55.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="5">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+                <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="7" GridPane.rowIndex="7">
+                    <children>
+                        <Rectangle height="52.0" opacity="0.0" width="52.0"/>
+                    </children>
+                </StackPane>
+            </children>
+        </GridPane>
+        </Pane>
+    </children>
+
 </AnchorPane>

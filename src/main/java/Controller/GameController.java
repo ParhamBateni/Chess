@@ -4,20 +4,27 @@ import Model.Board;
 import Model.Cell;
 import Model.Game;
 import Model.Piece;
+import View.Sound;
+import javafx.animation.RotateTransition;
 import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
 public class GameController {
     private Game game;
+    private Pane boardPane;
 
     private ArrayList<Cell> cellChoices = new ArrayList<>();
 
-    public GameController(Game game) {
+    public GameController(Game game, Pane boardPane) {
         this.game = game;
+        this.boardPane = boardPane;
         initGame();
     }
 
@@ -462,6 +469,10 @@ public class GameController {
             EventHandler moveHandler = new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
+                    Sound.play(Sound.SoundType.MOVE);
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {}
                     cellChoice.setPiece(Cell.selectedCell.piece);
                     Cell.selectedCell.removePiece();
                     Cell.selectedCell.removeSelectEventHandler();
@@ -474,8 +485,7 @@ public class GameController {
     }
 
     private void changeTurn() {
-        //todo write a function to flip the board
-//        flipBoard();
+        flipBoard();
         if (game.getCurrentTurnColor() == Piece.Color.BLACK) {
             game.setCurrentTurnColor(Piece.Color.WHITE);
             activate(Piece.Color.WHITE);
@@ -485,6 +495,25 @@ public class GameController {
             game.setCurrentTurnColor(Piece.Color.BLACK);
             activate(Piece.Color.BLACK);
             deactivate(Piece.Color.WHITE);
+        }
+    }
+
+    private void flipBoard() {
+        RotateTransition rotate = new RotateTransition();
+        rotate.setByAngle(180);
+        rotate.setDuration(Duration.millis(1000));
+        rotate.setAxis(new Point3D(20, 0, 0));
+        rotate.setNode(boardPane);
+        rotate.play();
+        for (Cell cell : game.board.getCells()) {
+            if (cell.hasPiece()) {
+                RotateTransition imageRotate = new RotateTransition();
+                imageRotate.setNode(cell.piece.image);
+                imageRotate.setByAngle(180);
+                imageRotate.setDelay(Duration.millis(500));
+                imageRotate.setAxis(new Point3D(20, 0, 0));
+                imageRotate.play();
+            }
         }
     }
 }
