@@ -120,6 +120,20 @@ public class GameController {
                 int[] pawnFirstChoice = new int[]{coordinates[0], coordinates[1] + direction};
                 try {
                     Cell firstChoiceCell = game.board.findCell(pawnFirstChoice);
+                    int[] pawnHitChoice1=new int[]{coordinates[0]+1,coordinates[1]+direction};
+                    int[] pawnHitChoice2=new int[]{coordinates[0]-1,coordinates[1]+direction};
+                    try{
+                        Cell hitChoice1=game.board.findCell(pawnHitChoice1);
+                        if(hitChoice1.hasPiece()){
+                            choices.add(pawnHitChoice1);
+                        }
+                    }catch (Exception e){}
+                    try {
+                        Cell hitChoice2=game.board.findCell(pawnHitChoice2);
+                        if(hitChoice2.hasPiece()){
+                            choices.add(pawnHitChoice2);
+                        }
+                    }catch (Exception e){}
                     if (!firstChoiceCell.hasPiece()) {
                         choices.add(pawnFirstChoice);
                         if (cell.coordinates[1] == 3.5 - direction * 2.5) {

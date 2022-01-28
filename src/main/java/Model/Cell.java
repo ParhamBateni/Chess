@@ -32,7 +32,9 @@ public class Cell {
         stackPane.getChildren().add(piece.image);
     }
     public void removePiece(){
-        stackPane.getChildren();
+        if(stackPane.getChildren().size()==2){
+            stackPane.getChildren().remove(1);
+        }
         this.piece=null;
     }
 
