@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.ImagePattern;
 
 import java.io.FileInputStream;
+import java.util.Collection;
 
 public class Piece {
     public enum Color{
@@ -17,7 +18,7 @@ public class Piece {
             this.name=name;
         }
     };
-    public enum Type{
+    public enum Type  {
         ROOK("rook"),
         KNIGHT("knight"),
         BISHOP("bishop"),

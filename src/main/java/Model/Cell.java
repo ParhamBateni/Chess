@@ -5,11 +5,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Stack;
+
 public class Cell {
     public static Cell selectedCell;
 
 
     public Piece piece;
+    private Piece previousPiece;
     public StackPane stackPane;
     public Rectangle rectangle;
     public EventHandler<MouseEvent> selectEventHandler;
@@ -30,6 +33,13 @@ public class Cell {
     public void setPiece(Piece piece) {
         this.piece = piece;
         stackPane.getChildren().add(piece.image);
+    }
+    public void checkSetPiece(Piece piece){
+        this.previousPiece=this.piece;
+        this.piece=piece;
+    }
+    public void checkRemovePiece(){
+        this.piece=previousPiece;
     }
     public void removePiece(){
         if(stackPane.getChildren().size()==2){
