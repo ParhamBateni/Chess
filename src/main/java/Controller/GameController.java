@@ -4,8 +4,10 @@ import Model.Board;
 import Model.Cell;
 import Model.Game;
 import Model.Piece;
+import View.Popup;
 import View.Sound;
 import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Point3D;
 import javafx.scene.input.MouseEvent;
@@ -24,8 +26,9 @@ public class GameController {
     private Pane boardPane;
 
     private HashMap<Piece, ArrayList<Cell>> cellChoices = new HashMap<>();
-    private ArrayList<Cell>selectedCellChoices=new ArrayList<>();
+    private ArrayList<Cell> selectedCellChoices = new ArrayList<>();
     private boolean checkHappened = false;
+    private boolean checkMateHappened = false;
 
     public GameController(Game game, Pane boardPane) {
         this.game = game;
@@ -65,6 +68,9 @@ public class GameController {
 
     private void activate(Piece.Color color) {
         findChoices();
+        if (checkMateHappened) {
+            endGame();
+        }
         for (Cell cell : game.board.getCells()) {
             if (cell.hasPiece() && cell.piece.color == color) {
                 cell.setSelectEventHandler(new EventHandler<MouseEvent>() {
@@ -101,18 +107,18 @@ public class GameController {
         Rectangle rectangle = cell.rectangle;
         rectangle.opacityProperty().set(0.5);
         rectangle.setFill(Color.CHARTREUSE);
-        selectedCellChoices=cellChoices.get(Cell.selectedCell.piece);
+        selectedCellChoices = cellChoices.get(Cell.selectedCell.piece);
         markChoices();
     }
 
     private void deselect() {
         for (int i = 0; i < selectedCellChoices.size(); i++) {
-                Cell cell = selectedCellChoices.get(i);
-                cell.rectangle.setOpacity(0);
-                cell.removeMoveEventHandler();
+            Cell cell = selectedCellChoices.get(i);
+            cell.rectangle.setOpacity(0);
+            cell.removeMoveEventHandler();
         }
         Cell.deselectCell();
-        selectedCellChoices=new ArrayList<>();
+        selectedCellChoices = new ArrayList<>();
     }
 
     private void markChoices() {
@@ -462,7 +468,6 @@ public class GameController {
                         break;
                     }
                     case KING: {
-                        //todo check if the choice is a safe cell
                         int i = coordinates[0];
                         int j = coordinates[1];
                         ArrayList<int[]> kingChoices = new ArrayList<>();
@@ -470,6 +475,10 @@ public class GameController {
                         kingChoices.add(new int[]{i, j + 1});
                         kingChoices.add(new int[]{i - 1, j});
                         kingChoices.add(new int[]{i, j - 1});
+                        kingChoices.add(new int[]{i + 1, j + 1});
+                        kingChoices.add(new int[]{i + 1, j - 1});
+                        kingChoices.add(new int[]{i - 1, j + 1});
+                        kingChoices.add(new int[]{i - 1, j - 1});
                         for (int[] choice : kingChoices) {
                             try {
                                 Cell choiceCell = game.board.findCell(choice);
@@ -502,6 +511,25 @@ public class GameController {
                 cellChoices.put(cell.piece, pieceChoices);
             }
         }
+        //check if check mate happened or not!
+        for (ArrayList<Cell> choices : cellChoices.values()) {
+            if (choices.size() != 0) {
+                return;
+            }
+        }
+        checkMateHappened = true;
+    }
+
+    private void endGame() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+                Sound.play(Sound.SoundType.END);
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+            Platform.runLater(() -> Popup.showEndGame(String.format("%s won the game by checkMate!", game.getOpponentTurnColor())));
+        }).start();
     }
 
     private boolean checkHappens(Cell cellSelected, Cell cellChoice) {
@@ -847,7 +875,7 @@ public class GameController {
 
     private void changeTurn() {
         flipBoard();
-        cellChoices=new HashMap<>();
+        cellChoices = new HashMap<>();
         Piece.Color opponentColor = game.getOpponentTurnColor();
         game.setOpponentTurnColor(game.getCurrentTurnColor());
         game.setCurrentTurnColor(opponentColor);

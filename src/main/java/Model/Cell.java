@@ -40,6 +40,7 @@ public class Cell {
     }
     public void checkRemovePiece(){
         this.piece=previousPiece;
+        this.previousPiece=null;
     }
     public void removePiece(){
         if(stackPane.getChildren().size()==2){

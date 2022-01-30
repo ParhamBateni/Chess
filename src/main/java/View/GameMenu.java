@@ -9,13 +9,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class GameMenu extends Application{
-
+    public static Stage gameMenuStage;
 
     public static void main(String[] args) {
         launch(args);
     }
     @Override
     public void start(Stage stage) throws Exception {
+        gameMenuStage=stage;
         URL fxmlAddress = getClass().getResource("/Visuals/fxml/GameMenu.fxml");
         Parent pane = FXMLLoader.load(fxmlAddress);
         Scene scene = new Scene(pane);
