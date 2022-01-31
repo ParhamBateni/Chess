@@ -34,4 +34,8 @@ public class Board {
         }
         throw new Exception(String.format("cell not found with coordination {%d,%d}",cor[0],cor[1] ));
     }
+
+    public Cell findCell(int i, int j) throws Exception{
+        return findCell(new int[]{i,j});
+    }
 }

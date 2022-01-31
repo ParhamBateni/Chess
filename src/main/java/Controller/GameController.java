@@ -22,13 +22,20 @@ import java.util.HashMap;
 import static Model.Piece.Type.*;
 
 public class GameController {
+    private boolean whiteKingHasMoved = false;
+    private boolean whiteRook1HasMoved = false;
+    private boolean whiteRook2HasMoved = false;
+    private boolean blackKingHasMoved = false;
+    private boolean blackRook1HasMoved = false;
+    private boolean blackRook2HasMoved = false;
+
     private Game game;
     private Pane boardPane;
-
     private HashMap<Piece, ArrayList<Cell>> cellChoices = new HashMap<>();
     private ArrayList<Cell> selectedCellChoices = new ArrayList<>();
     private boolean checkHappened = false;
     private boolean checkMateHappened = false;
+
 
     public GameController(Game game, Pane boardPane) {
         this.game = game;
@@ -471,6 +478,7 @@ public class GameController {
                         int i = coordinates[0];
                         int j = coordinates[1];
                         ArrayList<int[]> kingChoices = new ArrayList<>();
+
                         kingChoices.add(new int[]{i + 1, j});
                         kingChoices.add(new int[]{i, j + 1});
                         kingChoices.add(new int[]{i - 1, j});
@@ -479,6 +487,11 @@ public class GameController {
                         kingChoices.add(new int[]{i + 1, j - 1});
                         kingChoices.add(new int[]{i - 1, j + 1});
                         kingChoices.add(new int[]{i - 1, j - 1});
+
+
+                        //check for castling
+                        checkCastle(cell);
+
                         for (int[] choice : kingChoices) {
                             try {
                                 Cell choiceCell = game.board.findCell(choice);
@@ -508,7 +521,9 @@ public class GameController {
                         continue;
                     }
                 }
-                cellChoices.put(cell.piece, pieceChoices);
+                if(cellChoices.containsKey(cell.piece)){
+                    cellChoices.get(cell.piece).addAll(pieceChoices);
+                }else cellChoices.put(cell.piece, pieceChoices);
             }
         }
         //check if check mate happened or not!
@@ -520,6 +535,165 @@ public class GameController {
         checkMateHappened = true;
     }
 
+    private void checkCastle(Cell kingCell) {
+        int[] coordinates = kingCell.coordinates;
+        if (game.getCurrentTurnColor() == Piece.Color.WHITE) {
+            if (whiteKingHasMoved || (whiteRook1HasMoved && whiteRook2HasMoved) || checkHappened) {
+                return;
+            } else {
+                try {
+                    if (!whiteRook1HasMoved) {
+                        Cell cell1 = game.board.findCell(coordinates[0]+1, coordinates[1]);
+                        Cell cell2 = game.board.findCell(coordinates[0]+2, coordinates[1]);
+                        Cell rook1Cell = game.board.findCell(coordinates[0]+3, coordinates[1]);
+                        if (!cell1.hasPiece() && !cell2.hasPiece()) {
+                            if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
+                                ArrayList<Cell >choiceCell=new ArrayList<>();
+                                choiceCell.add(cell2);
+                                cellChoices.put(kingCell.piece,choiceCell);
+                                cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent mouseEvent) {
+                                        Sound.play(Sound.SoundType.CASTLE);
+
+                                        try {
+                                            Thread.sleep(50);
+                                        } catch (InterruptedException e) {
+                                        }
+                                        whiteRook1HasMoved=true;
+                                        whiteKingHasMoved=true;
+
+                                        cell2.setPiece(kingCell.piece);
+                                        kingCell.removePiece();
+                                        kingCell.removeSelectEventHandler();
+                                        cell1.setPiece(rook1Cell.piece);
+                                        rook1Cell.removePiece();
+                                        handleCheck(cell1);
+                                        deselect();
+                                        changeTurn();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    if (!whiteRook2HasMoved) {
+                        Cell cell1 = game.board.findCell(coordinates[0]-1, coordinates[1] );
+                        Cell cell2 = game.board.findCell(coordinates[0]-2, coordinates[1]);
+                        Cell cell3 = game.board.findCell(coordinates[0]-3, coordinates[1]);
+                        Cell rook2Cell = game.board.findCell(coordinates[0]-4, coordinates[1] );
+                        if (!cell1.hasPiece() && !cell2.hasPiece() && !cell3.hasPiece()) {
+                            if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
+                                ArrayList<Cell >choiceCell=new ArrayList<>();
+                                choiceCell.add(cell2);
+                                cellChoices.put(kingCell.piece,choiceCell);
+                                cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent mouseEvent) {
+                                        Sound.play(Sound.SoundType.CASTLE);
+                                        try {
+                                            Thread.sleep(50);
+                                        } catch (InterruptedException e) {
+                                        }
+                                        whiteRook2HasMoved=true;
+                                        whiteKingHasMoved=true;
+
+                                        cell2.setPiece(kingCell.piece);
+                                        kingCell.removePiece();
+                                        kingCell.removeSelectEventHandler();
+                                        cell1.setPiece(rook2Cell.piece);
+                                        rook2Cell.removePiece();
+                                        handleCheck(cell1);
+                                        deselect();
+                                        changeTurn();
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                } catch (Exception e) {
+                }
+            }
+        } else {
+            if (blackKingHasMoved || (blackRook1HasMoved && blackRook2HasMoved) || checkHappened) {
+                return;
+            } else {
+                try {
+                    if (!blackRook1HasMoved) {
+                        Cell cell1 = game.board.findCell(coordinates[0]+1, coordinates[1]);
+                        Cell cell2 = game.board.findCell(coordinates[0]+2, coordinates[1]);
+                        Cell rook1Cell = game.board.findCell(coordinates[0]+3, coordinates[1]);
+                        if (!cell1.hasPiece() && !cell2.hasPiece()) {
+                            if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
+                                ArrayList<Cell >choiceCell=new ArrayList<>();
+                                choiceCell.add(cell2);
+                                cellChoices.put(kingCell.piece,choiceCell);
+                                cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent mouseEvent) {
+                                        Sound.play(Sound.SoundType.CASTLE);
+                                        try {
+                                            Thread.sleep(50);
+                                        } catch (InterruptedException e) {
+                                        }
+                                        blackRook1HasMoved=true;
+                                        blackKingHasMoved=true;
+
+                                        cell2.setPiece(kingCell.piece);
+                                        kingCell.removePiece();
+                                        kingCell.removeSelectEventHandler();
+                                        cell1.setPiece(rook1Cell.piece);
+                                        rook1Cell.removePiece();
+                                        handleCheck(cell1);
+                                        deselect();
+                                        changeTurn();
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    if (!blackRook2HasMoved) {
+                        Cell cell1 = game.board.findCell(coordinates[0]-1, coordinates[1] );
+                        Cell cell2 = game.board.findCell(coordinates[0]-2, coordinates[1]);
+                        Cell cell3 = game.board.findCell(coordinates[0]-3, coordinates[1]);
+                        Cell rook2Cell = game.board.findCell(coordinates[0]-4, coordinates[1] );
+
+                        if (!cell1.hasPiece() && !cell2.hasPiece() && !cell3.hasPiece()) {
+                            if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
+                                ArrayList<Cell >choiceCell=new ArrayList<>();
+                                choiceCell.add(cell2);
+                                cellChoices.put(kingCell.piece,choiceCell);
+                                cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent mouseEvent) {
+                                        Sound.play(Sound.SoundType.CASTLE);
+                                        try {
+                                            Thread.sleep(50);
+                                        } catch (InterruptedException e) {
+                                        }
+                                        blackRook2HasMoved=true;
+                                        blackKingHasMoved=true;
+
+                                        cell2.setPiece(kingCell.piece);
+                                        kingCell.removePiece();
+                                        kingCell.removeSelectEventHandler();
+                                        cell1.setPiece(rook2Cell.piece);
+                                        rook2Cell.removePiece();
+                                        handleCheck(cell1);
+                                        deselect();
+                                        changeTurn();
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
     private void endGame() {
         new Thread(() -> {
             try {
@@ -528,7 +702,8 @@ public class GameController {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
-            Platform.runLater(() -> Popup.showEndGame(String.format("%s won the game by checkMate!", game.getOpponentTurnColor())));
+            Platform.runLater(() -> Popup.showEndGame(String.format("%s won the game by checkMate!",
+                    game.getOpponentTurnColor())));
         }).start();
     }
 
@@ -560,10 +735,11 @@ public class GameController {
                 if (threatensKing(cell, game.getOpponentTurnColor())) {
                     checkHappened = true;
                     Sound.play(Sound.SoundType.CHECK);
-                    break;
+                    return;
                 }
             }
         }
+        checkHappened = false;
     }
 
     private boolean threatensKing(Cell cell, Piece.Color kingColor) {
@@ -831,6 +1007,7 @@ public class GameController {
                 kingChoices.add(new int[]{i, j + 1});
                 kingChoices.add(new int[]{i - 1, j});
                 kingChoices.add(new int[]{i, j - 1});
+
                 for (int[] choice : kingChoices) {
                     try {
                         Cell choiceCell = game.board.findCell(choice);
@@ -858,6 +1035,28 @@ public class GameController {
                         Thread.sleep(50);
                     } catch (InterruptedException e) {
                     }
+
+                    //update king and rook conditions for castling
+                    if(Cell.selectedCell.piece.type==KING){
+                        if(Cell.selectedCell.piece.color== Piece.Color.WHITE){
+                            whiteKingHasMoved=true;
+                        }
+                        else{
+                            blackKingHasMoved=true;
+                        }
+                    }
+                    else if(Cell.selectedCell.piece.type==ROOK){
+                        if(Cell.selectedCell.piece.color==Piece.Color.WHITE) {
+                            if (Cell.selectedCell.coordinates[0] > 4) whiteRook1HasMoved=true;
+                            else whiteRook2HasMoved=true;
+                        }
+                        else{
+                            if(Cell.selectedCell.coordinates[0]>4)blackRook1HasMoved=true;
+                            else blackRook2HasMoved=true;
+                        }
+                    }
+
+
                     if (cellChoice.hasPiece()) cellChoice.removePiece();
                     cellChoice.setPiece(Cell.selectedCell.piece);
                     Cell.selectedCell.removePiece();
@@ -868,7 +1067,9 @@ public class GameController {
                 }
 
             };
-            cellChoice.setMoveEventHandler(moveHandler);
+            if(!cellChoice.hasMoveEventHandler()){
+                cellChoice.setMoveEventHandler(moveHandler);
+            }
         }
     }
 
