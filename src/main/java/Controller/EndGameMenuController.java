@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PopMenuController implements Initializable{
+public class EndGameMenuController implements Initializable{
     public Button playAgainButton;
     public Button exitButton;
     public Label message;

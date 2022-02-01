@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: dimgray;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PromotionController">
+   <children>
+      <Label alignment="CENTER" textFill="chartreuse" contentDisplay="CENTER" layoutX="3.0" layoutY="14.0" prefHeight="50.0" prefWidth="194.0" style="-fx-font-weight: bold;" text="Select a piece to promote to" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <StackPane fx:id="queenStackPane" layoutX="49.0" layoutY="75.0" prefHeight="50.0" prefWidth="50.0">
+
+      </StackPane>
+      <StackPane fx:id= "knightStackPane" layoutX="99.0" layoutY="75.0" prefHeight="50.0" prefWidth="50.0">
+
+      </StackPane>
+      <StackPane fx:id="rookStackPane" layoutX="49.0" layoutY="125.0" prefHeight="50.0" prefWidth="50.0">
+
+      </StackPane>
+      <StackPane fx:id="bishopStackPane" layoutX="99.0" layoutY="125.0" prefHeight="50.0" prefWidth="50.0">
+
+      </StackPane>
+   </children>
+</AnchorPane>

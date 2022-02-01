@@ -9,9 +9,11 @@ import View.Sound;
 import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -557,7 +559,7 @@ public class GameController {
                                         Sound.play(Sound.SoundType.CASTLE);
 
                                         try {
-                                            Thread.sleep(50);
+                                            Thread.sleep(200);
                                         } catch (InterruptedException e) {
                                         }
                                         whiteRook1HasMoved=true;
@@ -591,7 +593,7 @@ public class GameController {
                                     public void handle(MouseEvent mouseEvent) {
                                         Sound.play(Sound.SoundType.CASTLE);
                                         try {
-                                            Thread.sleep(50);
+                                            Thread.sleep(200);
                                         } catch (InterruptedException e) {
                                         }
                                         whiteRook2HasMoved=true;
@@ -633,7 +635,7 @@ public class GameController {
                                     public void handle(MouseEvent mouseEvent) {
                                         Sound.play(Sound.SoundType.CASTLE);
                                         try {
-                                            Thread.sleep(50);
+                                            Thread.sleep(200);
                                         } catch (InterruptedException e) {
                                         }
                                         blackRook1HasMoved=true;
@@ -668,7 +670,7 @@ public class GameController {
                                     public void handle(MouseEvent mouseEvent) {
                                         Sound.play(Sound.SoundType.CASTLE);
                                         try {
-                                            Thread.sleep(50);
+                                            Thread.sleep(200);
                                         } catch (InterruptedException e) {
                                         }
                                         blackRook2HasMoved=true;
@@ -735,6 +737,10 @@ public class GameController {
                 if (threatensKing(cell, game.getOpponentTurnColor())) {
                     checkHappened = true;
                     Sound.play(Sound.SoundType.CHECK);
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                    }
                     return;
                 }
             }
@@ -1007,6 +1013,10 @@ public class GameController {
                 kingChoices.add(new int[]{i, j + 1});
                 kingChoices.add(new int[]{i - 1, j});
                 kingChoices.add(new int[]{i, j - 1});
+                kingChoices.add(new int[]{i + 1, j + 1});
+                kingChoices.add(new int[]{i + 1, j - 1});
+                kingChoices.add(new int[]{i - 1, j + 1});
+                kingChoices.add(new int[]{i - 1, j - 1});
 
                 for (int[] choice : kingChoices) {
                     try {
@@ -1032,7 +1042,7 @@ public class GameController {
                         Sound.play(Sound.SoundType.CAPTURE);
                     } else Sound.play(Sound.SoundType.MOVE);
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                     }
 
@@ -1061,6 +1071,7 @@ public class GameController {
                     cellChoice.setPiece(Cell.selectedCell.piece);
                     Cell.selectedCell.removePiece();
                     Cell.selectedCell.removeSelectEventHandler();
+                    handlePromotion(cellChoice);
                     handleCheck(cellChoice);
                     deselect();
                     changeTurn();
@@ -1070,6 +1081,137 @@ public class GameController {
             if(!cellChoice.hasMoveEventHandler()){
                 cellChoice.setMoveEventHandler(moveHandler);
             }
+        }
+    }
+    private void handlePromotion(Cell cell){
+        Piece piece=cell.piece;
+        if(piece.type==PAWN && (cell.coordinates[1]==0 || cell.coordinates[1]==7)){
+            deselect();
+            deactivate(game.getCurrentTurnColor());
+            ArrayList<StackPane>promotionStackPanes=Popup.getPromotionStackPanes();
+            StackPane queenStackPane=promotionStackPanes.get(0);
+            StackPane knightStackPane=promotionStackPanes.get(1);
+            StackPane rookStackPane=promotionStackPanes.get(2);
+            StackPane bishopStackPane=promotionStackPanes.get(3);
+
+            Piece.Color color=game.getCurrentTurnColor();
+            Piece queen=new Piece(QUEEN,color);
+            Piece knight=new Piece(KNIGHT,color);
+            Piece rook=new Piece(ROOK,color);
+            Piece bishop=new Piece(BISHOP,color);
+
+            queenStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY, Insets.EMPTY)));
+            knightStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY, Insets.EMPTY)));
+            rookStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY, Insets.EMPTY)));
+            bishopStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY, Insets.EMPTY)));
+
+            queenStackPane.getChildren().add(queen.image);
+            knightStackPane.getChildren().add(knight.image);
+            rookStackPane.getChildren().add(rook.image);
+            bishopStackPane.getChildren().add(bishop.image);
+
+            queenStackPane.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    queenStackPane.setBackground(new Background(new BackgroundFill(Color.CHARTREUSE,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+            queenStackPane.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    queenStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+
+            knightStackPane.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    knightStackPane.setBackground(new Background(new BackgroundFill(Color.CHARTREUSE,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+            knightStackPane.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    knightStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+
+            rookStackPane.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    rookStackPane.setBackground(new Background(new BackgroundFill(Color.CHARTREUSE,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+            rookStackPane.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    rookStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+
+            bishopStackPane.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    bishopStackPane.setBackground(new Background(new BackgroundFill(Color.CHARTREUSE,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+            bishopStackPane.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+
+                    bishopStackPane.setBackground(new Background(new BackgroundFill(Color.GRAY,CornerRadii.EMPTY,
+                            Insets.EMPTY)));
+                }
+            });
+
+
+            queenStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    cell.removePiece();
+                    cell.setPiece(queen);
+                    cell.piece.image.setRotate(boardPane.getRotate());
+                    Popup.popupStage.close();
+                }
+            });
+
+            knightStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    cell.removePiece();
+                    cell.setPiece(knight);
+                    cell.piece.image.setRotate(boardPane.getRotate());
+                    Popup.popupStage.close();
+                }
+            });
+
+            rookStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    cell.removePiece();
+                    cell.setPiece(rook);
+                    cell.piece.image.setRotate(boardPane.getRotate());
+                    Popup.popupStage.close();
+                }
+            });
+
+            bishopStackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    cell.removePiece();
+                    cell.setPiece(bishop);
+                    cell.piece.image.setRotate(boardPane.getRotate());
+                    Popup.popupStage.close();
+                }
+            });
+            Popup.popupStage.showAndWait();
         }
     }
 
