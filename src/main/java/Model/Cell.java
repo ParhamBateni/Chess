@@ -96,8 +96,10 @@ public class Cell {
     }
 
     public void removeMoveEventHandler(){
-        stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
-        this.moveEventHandler=null;
+        if(moveEventHandler!=null) {
+            stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, moveEventHandler);
+            this.moveEventHandler = null;
+        }
     }
     public boolean hasMoveEventHandler(){
         return this.moveEventHandler!=null;

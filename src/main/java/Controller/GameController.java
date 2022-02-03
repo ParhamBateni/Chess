@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -31,15 +32,21 @@ public class GameController {
     private boolean blackRook1HasMoved = false;
     private boolean blackRook2HasMoved = false;
 
-    private Game game;
-    private Pane boardPane;
+    private GameMenuController gameMenuController;
+    protected Game game;
+    protected Pane boardPane;
     private HashMap<Piece, ArrayList<Cell>> cellChoices = new HashMap<>();
     private ArrayList<Cell> selectedCellChoices = new ArrayList<>();
     private boolean checkHappened = false;
     private boolean checkMateHappened = false;
 
+    protected int player1DrawOfferCounts=3;
+    protected int player2DrawOfferCounts=3;
+    protected boolean drawOfferRaised=false;
 
-    public GameController(Game game, Pane boardPane) {
+
+    public GameController(GameMenuController gameMenuController,Game game, Pane boardPane) {
+        this.gameMenuController=gameMenuController;
         this.game = game;
         this.boardPane = boardPane;
         initGame();
@@ -75,10 +82,50 @@ public class GameController {
         activate(game.getCurrentTurnColor());
     }
 
-    private void activate(Piece.Color color) {
+    private void checkDrawOffer(){
+        Piece.Color currentColor=game.getCurrentTurnColor();
+        if(currentColor== Piece.Color.WHITE){
+            if(player1DrawOfferCounts==0)gameMenuController.drawButton.setDisable(true);
+            else gameMenuController.drawButton.setDisable(false);
+        }
+        else{
+            if(player2DrawOfferCounts==0)gameMenuController.drawButton.setDisable(true);
+            else gameMenuController.drawButton.setDisable(false);
+        }
+        if(drawOfferRaised){
+            boardPane.getParent().setDisable(true);
+            ArrayList<Button> drawConfirmButtons=Popup.getDrawConfirmButtons();
+            Button yesButton=drawConfirmButtons.get(0);
+            Button noButton=drawConfirmButtons.get(1);
+
+            yesButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    Popup.popupStage.close();
+                    endGame("Draw by agreement",true);
+                }
+            });
+            noButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    drawOfferRaised=false;
+                    Popup.popupStage.close();
+                }
+            });
+            Popup.popupStage.showAndWait();
+            boardPane.getParent().setDisable(false);
+
+
+
+
+        }
+    }
+
+    protected void activate(Piece.Color color) {
+        checkDrawOffer();
         findChoices();
         if (checkMateHappened) {
-            endGame();
+            endGame("checkmate",false);
         }
         for (Cell cell : game.board.getCells()) {
             if (cell.hasPiece() && cell.piece.color == color) {
@@ -103,7 +150,7 @@ public class GameController {
         }
     }
 
-    private void deactivate(Piece.Color color) {
+    protected void deactivate(Piece.Color color) {
         for (Cell cell : game.board.getCells()) {
             if (cell.hasPiece() && cell.piece.color == color) {
                 cell.removeSelectEventHandler();
@@ -120,7 +167,7 @@ public class GameController {
         markChoices();
     }
 
-    private void deselect() {
+    protected void deselect() {
         for (int i = 0; i < selectedCellChoices.size(); i++) {
             Cell cell = selectedCellChoices.get(i);
             cell.rectangle.setOpacity(0);
@@ -696,16 +743,27 @@ public class GameController {
         }
     }
 
-    private void endGame() {
+    private void endGame(String reason,boolean isDraw) {
         new Thread(() -> {
+            boardPane.getParent().setDisable(true);
             try {
-                Thread.sleep(2000);
+                Thread.sleep(500);
                 Sound.play(Sound.SoundType.END);
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
-            Platform.runLater(() -> Popup.showEndGame(String.format("%s won the game by checkMate!",
-                    game.getOpponentTurnColor())));
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    if(isDraw){
+                        Popup.showEndGame(reason);
+                    }
+                    else{
+                    Popup.showEndGame(String.format("%s won the game by %s!",
+                            game.getOpponentTurnColor(),reason));
+                    }
+                }
+            });
         }).start();
     }
 
@@ -1083,11 +1141,13 @@ public class GameController {
             }
         }
     }
+    public void resign(){
+        endGame("resignation",false);
+    }
     private void handlePromotion(Cell cell){
         Piece piece=cell.piece;
         if(piece.type==PAWN && (cell.coordinates[1]==0 || cell.coordinates[1]==7)){
-            deselect();
-            deactivate(game.getCurrentTurnColor());
+            boardPane.getParent().setDisable(true);
             ArrayList<StackPane>promotionStackPanes=Popup.getPromotionStackPanes();
             StackPane queenStackPane=promotionStackPanes.get(0);
             StackPane knightStackPane=promotionStackPanes.get(1);
@@ -1212,6 +1272,7 @@ public class GameController {
                 }
             });
             Popup.popupStage.showAndWait();
+            boardPane.getParent().setDisable(false);
         }
     }
 

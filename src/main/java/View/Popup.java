@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -19,13 +20,6 @@ import java.util.Collection;
 
 public abstract class Popup {
     public static Stage popupStage;
-    static{
-        popupStage=new Stage();
-        popupStage.setResizable(false);
-        popupStage.initStyle(StageStyle.UNDECORATED);
-//        popupStage.setAlwaysOnTop(true);
-        popupStage.initOwner(GameMenu.gameMenuStage);
-    }
 
     public static void showEndGame(String message){
         try {
@@ -33,9 +27,14 @@ public abstract class Popup {
             Pane pane = FXMLLoader.load(fxmlAddress);
             Label label=(Label) ((Pane)pane.getChildren().get(0)).getChildren().get(0);
             label.setText(message);
+
+            popupStage=new Stage();
+            popupStage.setResizable(false);
+            popupStage.initStyle(StageStyle.UTILITY);
+            popupStage.initOwner(GameMenu.gameMenuStage);
+
             Scene scene = new Scene(pane);
             popupStage.setScene(scene);
-            popupStage.initStyle(StageStyle.UTILITY);
             popupStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
                 public void handle(WindowEvent windowEvent) {
@@ -56,9 +55,53 @@ public abstract class Popup {
                 if(node instanceof StackPane) promotionStackPanes.add((StackPane) node);
             }
             Scene scene=new Scene(pane);
+
+            popupStage=new Stage();
+            popupStage.setResizable(false);
+            popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.initOwner(GameMenu.gameMenuStage);
             popupStage.setScene(scene);
         } catch (IOException e) {
         }
         return promotionStackPanes;
+    }
+    public static ArrayList<Button> getResignConfirmButtons(){
+        ArrayList<Button>resignButtons=new ArrayList<>();
+        try{
+            URL fxmlAddress=Popup.class.getResource("/Visuals/fxml/ResignConfirm.fxml");
+            Pane pane=FXMLLoader.load(fxmlAddress);
+            for(Node node:pane.getChildren()){
+                if(node instanceof Button) resignButtons.add((Button) node);
+            }
+            Scene scene=new Scene(pane);
+
+            popupStage=new Stage();
+            popupStage.setResizable(false);
+            popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.initOwner(GameMenu.gameMenuStage);
+            popupStage.setScene(scene);
+        } catch (IOException e) {
+        }
+        return resignButtons;
+
+    }
+    public static ArrayList<Button> getDrawConfirmButtons(){
+        ArrayList<Button>resignButtons=new ArrayList<>();
+        try{
+            URL fxmlAddress=Popup.class.getResource("/Visuals/fxml/DrawConfirm.fxml");
+            Pane pane=FXMLLoader.load(fxmlAddress);
+            for(Node node:pane.getChildren()){
+                if(node instanceof Button) resignButtons.add((Button) node);
+            }
+            Scene scene=new Scene(pane);
+
+            popupStage=new Stage();
+            popupStage.setResizable(false);
+            popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.initOwner(GameMenu.gameMenuStage);
+            popupStage.setScene(scene);
+        } catch (IOException e) {
+        }
+        return resignButtons;
     }
 }
