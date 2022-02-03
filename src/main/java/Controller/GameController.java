@@ -122,30 +122,32 @@ public class GameController {
     }
 
     protected void activate(Piece.Color color) {
-        checkDrawOffer();
         findChoices();
         if (checkMateHappened) {
             endGame("checkmate",false);
         }
-        for (Cell cell : game.board.getCells()) {
-            if (cell.hasPiece() && cell.piece.color == color) {
-                cell.setSelectEventHandler(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        try {
-                            Board board = game.board;
-                            int[] coordinates = cell.coordinates;
-                            Cell cell = board.findCell(coordinates);
-                            if (Cell.selectedCell == cell) deselect();
-                            else {
-                                deselect();
-                                select(cell);
+        else {
+            checkDrawOffer();
+            for (Cell cell : game.board.getCells()) {
+                if (cell.hasPiece() && cell.piece.color == color) {
+                    cell.setSelectEventHandler(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            try {
+                                Board board = game.board;
+                                int[] coordinates = cell.coordinates;
+                                Cell cell = board.findCell(coordinates);
+                                if (Cell.selectedCell == cell) deselect();
+                                else {
+                                    deselect();
+                                    select(cell);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
-                    }
-                });
+                    });
+                }
             }
         }
     }
