@@ -19,7 +19,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.HashMap;
 
 import static Model.Piece.Type.*;
@@ -43,6 +45,8 @@ public class GameController {
     protected int player1DrawOfferCounts=3;
     protected int player2DrawOfferCounts=3;
     protected boolean drawOfferRaised=false;
+    private boolean drawByStatementHappened=false;
+    private boolean drawByInsufficientMaterialHappened=false;
 
 
     public GameController(GameMenuController gameMenuController,Game game, Pane boardPane) {
@@ -123,8 +127,15 @@ public class GameController {
 
     protected void activate(Piece.Color color) {
         findChoices();
+        checkDraw();
+        if(drawByStatementHappened){
+            endGame("Draw by statement",true);
+        }
+        else if(drawByInsufficientMaterialHappened){
+            endGame("Draw by insufficient material",true);
+        }
         if (checkMateHappened) {
-            endGame("checkmate",false);
+            endGame("Checkmate",false);
         }
         else {
             checkDrawOffer();
@@ -150,6 +161,63 @@ public class GameController {
                 }
             }
         }
+    }
+    private void checkDraw(){
+        checkDrawByStatement();
+        checkDrawByInsufficientMaterial();
+    }
+    private void checkDrawByInsufficientMaterial(){
+        ArrayList<Piece>whitePieces=new ArrayList<>();
+        ArrayList<Piece>blackPieces=new ArrayList<>();
+        for(Cell cell:game.board.getCells()){
+            if(cell.hasPiece()&&cell.piece.type!=KING){
+                if(cell.piece.color== Piece.Color.WHITE)whitePieces.add(cell.piece);
+                else blackPieces.add(cell.piece);
+            }
+        }
+        if(whitePieces.size()>1 || blackPieces.size()>1){
+            if(whitePieces.size()==0&&blackPieces.size()==2&&blackPieces.get(0).type==KNIGHT&&
+                    blackPieces.get(1).type==KNIGHT){
+                drawByInsufficientMaterialHappened=true;
+            }
+            else if(blackPieces.size()==0&&whitePieces.size()==2&&whitePieces.get(0).type==KNIGHT&&
+                    whitePieces.get(1).type==KNIGHT){
+                drawByInsufficientMaterialHappened=true;
+            }
+            return;
+        }
+        if(whitePieces.size()==0 && blackPieces.size()==0){
+            drawByInsufficientMaterialHappened=true;
+        }
+        else if(whitePieces.size()==1 && blackPieces.size()==0){
+            if(whitePieces.get(0).type==BISHOP|| whitePieces.get(0).type==KNIGHT){
+                drawByInsufficientMaterialHappened=true;
+            }
+        }
+        else if(whitePieces.size()==0 && blackPieces.size()==1){
+            if(blackPieces.get(0).type== BISHOP|| blackPieces.get(0).type==KNIGHT){
+                drawByInsufficientMaterialHappened=true;
+            }
+        }
+        else if(whitePieces.size()==1 && blackPieces.size()==1){
+            if(blackPieces.get(0).type==BISHOP&&whitePieces.get(0).type==KNIGHT||
+                    blackPieces.get(0).type==KNIGHT&& whitePieces.get(0).type==BISHOP||
+                    blackPieces.get(0).type==BISHOP&&whitePieces.get(0).type==BISHOP||
+                    blackPieces.get(0).type==KNIGHT&&whitePieces.get(0).type==KNIGHT){
+                drawByInsufficientMaterialHappened=true;
+            }
+        }
+
+
+
+    }
+    private void checkDrawByStatement(){
+        for (ArrayList<Cell> choices : cellChoices.values()) {
+            if (choices.size() != 0) {
+                return;
+            }
+        }
+        drawByStatementHappened=true;
     }
 
     protected void deactivate(Piece.Color color) {
@@ -619,6 +687,7 @@ public class GameController {
                                         kingCell.removeSelectEventHandler();
                                         cell1.setPiece(rook1Cell.piece);
                                         rook1Cell.removePiece();
+                                        rook1Cell.removeSelectEventHandler();
                                         handleCheck(cell1);
                                         deselect();
                                         changeTurn();
@@ -653,6 +722,7 @@ public class GameController {
                                         kingCell.removeSelectEventHandler();
                                         cell1.setPiece(rook2Cell.piece);
                                         rook2Cell.removePiece();
+                                        rook2Cell.removeSelectEventHandler();
                                         handleCheck(cell1);
                                         deselect();
                                         changeTurn();
@@ -695,6 +765,7 @@ public class GameController {
                                         kingCell.removeSelectEventHandler();
                                         cell1.setPiece(rook1Cell.piece);
                                         rook1Cell.removePiece();
+                                        rook1Cell.removeSelectEventHandler();
                                         handleCheck(cell1);
                                         deselect();
                                         changeTurn();
@@ -730,6 +801,7 @@ public class GameController {
                                         kingCell.removeSelectEventHandler();
                                         cell1.setPiece(rook2Cell.piece);
                                         rook2Cell.removePiece();
+                                        rook2Cell.removeSelectEventHandler();
                                         handleCheck(cell1);
                                         deselect();
                                         changeTurn();
