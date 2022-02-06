@@ -128,14 +128,14 @@ public class GameController {
     protected void activate(Piece.Color color) {
         findChoices();
         checkDraw();
-        if(drawByStatementHappened){
+        if (checkMateHappened) {
+            endGame("Checkmate",false);
+        }
+        else if(drawByStatementHappened){
             endGame("Draw by statement",true);
         }
         else if(drawByInsufficientMaterialHappened){
             endGame("Draw by insufficient material",true);
-        }
-        if (checkMateHappened) {
-            endGame("Checkmate",false);
         }
         else {
             checkDrawOffer();
@@ -646,12 +646,14 @@ public class GameController {
             }
         }
         //check if check mate happened or not!
-        for (ArrayList<Cell> choices : cellChoices.values()) {
-            if (choices.size() != 0) {
-                return;
+        if(checkHappened) {
+            for (ArrayList<Cell> choices : cellChoices.values()) {
+                if (choices.size() != 0) {
+                    return;
+                }
             }
+            checkMateHappened = true;
         }
-        checkMateHappened = true;
     }
 
     private void checkCastle(Cell kingCell) {

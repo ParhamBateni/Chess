@@ -1,6 +1,8 @@
 package Model;
 
+import View.GameMenu;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
@@ -17,6 +19,8 @@ public class Cell {
     public Rectangle rectangle;
     public EventHandler<MouseEvent> selectEventHandler;
     public EventHandler<MouseEvent>moveEventHandler;
+    public EventHandler<MouseEvent>enterEventHandler;
+    public EventHandler<MouseEvent>exitEventHandler;
     public int[] coordinates;
     public Board board;
 
@@ -86,6 +90,20 @@ public class Cell {
     public void setSelectEventHandler(EventHandler<MouseEvent> selectEventHandler) {
         if(this.selectEventHandler==null) {
             stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
+            enterEventHandler=new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    GameMenu.gameMenuStage.getScene().setCursor(Cursor.HAND);
+                }
+            };
+            stackPane.addEventHandler(MouseEvent.MOUSE_ENTERED,enterEventHandler);
+            exitEventHandler=new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    GameMenu.gameMenuStage.getScene().setCursor(Cursor.DEFAULT);
+                }
+            };
+            stackPane.addEventHandler(MouseEvent.MOUSE_EXITED,exitEventHandler);
             this.selectEventHandler = selectEventHandler;
         }
     }
@@ -104,6 +122,8 @@ public class Cell {
     public void removeSelectEventHandler(){
         if(selectEventHandler!=null) {
             stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
+            stackPane.removeEventHandler(MouseEvent.MOUSE_ENTERED,enterEventHandler);
+            stackPane.removeEventHandler(MouseEvent.MOUSE_EXITED,exitEventHandler);
             this.selectEventHandler = null;
         }
     }
