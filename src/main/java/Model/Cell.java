@@ -1,6 +1,8 @@
 package Model;
 
 import View.GameMenu;
+import com.sun.javafx.cursor.CursorFrame;
+import com.sun.javafx.cursor.CursorType;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
@@ -19,8 +21,10 @@ public class Cell {
     public Rectangle rectangle;
     public EventHandler<MouseEvent> selectEventHandler;
     public EventHandler<MouseEvent>moveEventHandler;
-    public EventHandler<MouseEvent>enterEventHandler;
-    public EventHandler<MouseEvent>exitEventHandler;
+    public EventHandler<MouseEvent>enterSelectEventHandler;
+    public EventHandler<MouseEvent>exitSelectEventHandler;
+    public EventHandler<MouseEvent>enterMoveEventHandler;
+    public EventHandler<MouseEvent>exitMoveEventHandler;
     public int[] coordinates;
     public Board board;
 
@@ -90,40 +94,50 @@ public class Cell {
     public void setSelectEventHandler(EventHandler<MouseEvent> selectEventHandler) {
         if(this.selectEventHandler==null) {
             stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
-            enterEventHandler=new EventHandler<MouseEvent>() {
+            enterSelectEventHandler=new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    GameMenu.gameMenuStage.getScene().setCursor(Cursor.HAND);
+                    GameMenu.gameMenuStage.getScene().setCursor(Cursor.OPEN_HAND);
                 }
             };
-            stackPane.addEventHandler(MouseEvent.MOUSE_ENTERED,enterEventHandler);
-            exitEventHandler=new EventHandler<MouseEvent>() {
+            stackPane.addEventHandler(MouseEvent.MOUSE_ENTERED,enterSelectEventHandler);
+            exitSelectEventHandler=new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     GameMenu.gameMenuStage.getScene().setCursor(Cursor.DEFAULT);
                 }
             };
-            stackPane.addEventHandler(MouseEvent.MOUSE_EXITED,exitEventHandler);
+            stackPane.addEventHandler(MouseEvent.MOUSE_EXITED,exitSelectEventHandler);
             this.selectEventHandler = selectEventHandler;
         }
     }
 
     public void setMoveEventHandler(EventHandler<MouseEvent> moveEventHandler) {
-        if(this.moveEventHandler==null){
-            stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
-            this.moveEventHandler=moveEventHandler;
-        }
-        else{
+        if(this.moveEventHandler!=null){
             stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED,this.moveEventHandler);
-            stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
-            this.moveEventHandler=moveEventHandler;
         }
+        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
+        enterMoveEventHandler=new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.gameMenuStage.getScene().setCursor(Cursor.CLOSED_HAND);
+            }
+        };
+        stackPane.addEventHandler(MouseEvent.MOUSE_ENTERED,enterMoveEventHandler);
+        exitMoveEventHandler=new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                GameMenu.gameMenuStage.getScene().setCursor(Cursor.DEFAULT);
+            }
+        };
+        stackPane.addEventHandler(MouseEvent.MOUSE_EXITED,exitMoveEventHandler);
+        this.moveEventHandler=moveEventHandler;
     }
     public void removeSelectEventHandler(){
         if(selectEventHandler!=null) {
             stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
-            stackPane.removeEventHandler(MouseEvent.MOUSE_ENTERED,enterEventHandler);
-            stackPane.removeEventHandler(MouseEvent.MOUSE_EXITED,exitEventHandler);
+            stackPane.removeEventHandler(MouseEvent.MOUSE_ENTERED,enterSelectEventHandler);
+            stackPane.removeEventHandler(MouseEvent.MOUSE_EXITED,exitSelectEventHandler);
             this.selectEventHandler = null;
         }
     }
@@ -131,6 +145,8 @@ public class Cell {
     public void removeMoveEventHandler(){
         if(moveEventHandler!=null) {
             stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, moveEventHandler);
+            stackPane.removeEventHandler(MouseEvent.MOUSE_ENTERED,enterMoveEventHandler);
+            stackPane.removeEventHandler(MouseEvent.MOUSE_EXITED,exitMoveEventHandler);
             this.moveEventHandler = null;
         }
     }

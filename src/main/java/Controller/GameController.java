@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Point3D;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -1368,6 +1369,7 @@ public class GameController {
     }
 
     private void flipBoard() {
+        gameMenuController.boardPane.getScene().setCursor(Cursor.DEFAULT);
         RotateTransition rotate = new RotateTransition();
         rotate.setByAngle(180);
         rotate.setDuration(Duration.millis(1000));
