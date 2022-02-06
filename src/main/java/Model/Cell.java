@@ -32,7 +32,11 @@ public class Cell {
 
     public void setPiece(Piece piece) {
         this.piece = piece;
-        stackPane.getChildren().add(piece.image);
+        try {
+            stackPane.getChildren().add(piece.image);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public void checkSetPiece(Piece piece){
         this.previousPiece=this.piece;
@@ -80,13 +84,22 @@ public class Cell {
     }
 
     public void setSelectEventHandler(EventHandler<MouseEvent> selectEventHandler) {
-        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
-        this.selectEventHandler= selectEventHandler;
+        if(this.selectEventHandler==null) {
+            stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED, selectEventHandler);
+            this.selectEventHandler = selectEventHandler;
+        }
     }
 
     public void setMoveEventHandler(EventHandler<MouseEvent> moveEventHandler) {
-        stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
-        this.moveEventHandler=moveEventHandler;
+        if(this.moveEventHandler==null){
+            stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
+            this.moveEventHandler=moveEventHandler;
+        }
+        else{
+            stackPane.removeEventHandler(MouseEvent.MOUSE_CLICKED,this.moveEventHandler);
+            stackPane.addEventHandler(MouseEvent.MOUSE_CLICKED,moveEventHandler);
+            this.moveEventHandler=moveEventHandler;
+        }
     }
     public void removeSelectEventHandler(){
         if(selectEventHandler!=null) {

@@ -669,7 +669,8 @@ public class GameController {
                             if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
                                 ArrayList<Cell >choiceCell=new ArrayList<>();
                                 choiceCell.add(cell2);
-                                cellChoices.put(kingCell.piece,choiceCell);
+                                if(cellChoices.containsKey(kingCell.piece)) cellChoices.get(kingCell.piece).add(cell2);
+                                else cellChoices.put(kingCell.piece,choiceCell);
                                 cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent mouseEvent) {
@@ -705,7 +706,8 @@ public class GameController {
                             if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
                                 ArrayList<Cell >choiceCell=new ArrayList<>();
                                 choiceCell.add(cell2);
-                                cellChoices.put(kingCell.piece,choiceCell);
+                                if(cellChoices.containsKey(kingCell.piece)) cellChoices.get(kingCell.piece).add(cell2);
+                                else cellChoices.put(kingCell.piece,choiceCell);
                                 cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent mouseEvent) {
@@ -748,7 +750,8 @@ public class GameController {
                             if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
                                 ArrayList<Cell >choiceCell=new ArrayList<>();
                                 choiceCell.add(cell2);
-                                cellChoices.put(kingCell.piece,choiceCell);
+                                if(cellChoices.containsKey(kingCell.piece)) cellChoices.get(kingCell.piece).add(cell2);
+                                else cellChoices.put(kingCell.piece,choiceCell);
                                 cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent mouseEvent) {
@@ -784,7 +787,8 @@ public class GameController {
                             if (!checkHappens(kingCell, cell1) && !checkHappens(kingCell, cell2)) {
                                 ArrayList<Cell >choiceCell=new ArrayList<>();
                                 choiceCell.add(cell2);
-                                cellChoices.put(kingCell.piece,choiceCell);
+                                if(cellChoices.containsKey(kingCell.piece)) cellChoices.get(kingCell.piece).add(cell2);
+                                else cellChoices.put(kingCell.piece,choiceCell);
                                 cell2.setMoveEventHandler(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent mouseEvent) {
@@ -1365,7 +1369,7 @@ public class GameController {
         RotateTransition rotate = new RotateTransition();
         rotate.setByAngle(180);
         rotate.setDuration(Duration.millis(1000));
-        rotate.setAxis(new Point3D(20, 0, 0));
+        rotate.setAxis(new Point3D(0, 0, 10));
         rotate.setNode(boardPane);
         rotate.play();
         for (Cell cell : game.board.getCells()) {
@@ -1374,7 +1378,7 @@ public class GameController {
                 imageRotate.setNode(cell.piece.image);
                 imageRotate.setByAngle(180);
                 imageRotate.setDelay(Duration.millis(500));
-                imageRotate.setAxis(new Point3D(20, 0, 0));
+                imageRotate.setAxis(new Point3D(0, 0, 10));
                 imageRotate.play();
             }
         }
