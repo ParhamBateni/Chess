@@ -18,7 +18,7 @@ public class GameMenu extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         gameMenuStage=stage;
-        URL fxmlAddress = getClass().getResource("/Visuals/fxml/GameMenu.fxml");
+        URL fxmlAddress = getClass().getResource("/graphics/fxml/GameMenu.fxml");
         Parent pane = FXMLLoader.load(fxmlAddress);
         Scene scene = new Scene(pane);
         stage.setTitle("Chess :)");

@@ -33,7 +33,6 @@ public class Piece {
     };
     public Type type;
     public Color color;
-    public int[] coordination;
     public int point;
     public ImageView image;
 
@@ -41,7 +40,7 @@ public class Piece {
         this.type=type;
         this.color=color;
         try {
-            FileInputStream input = new FileInputStream("src\\resources\\Visuals\\png\\"+color.name+
+            FileInputStream input = new FileInputStream("src\\resources\\graphics\\png\\"+color.name+
                     "\\"+type.name+".png");
             this.image = new ImageView(new Image(input));
             image.setFitWidth(50);

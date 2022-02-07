@@ -20,7 +20,7 @@ public class Sound {
         private String url;
 
         SoundType(String name) {
-            this.url=String.valueOf(getClass().getResource("/Visuals/mp3/"))+name;
+            this.url=String.valueOf(getClass().getResource("/graphics/mp3/"))+name;
         }
     }
 
