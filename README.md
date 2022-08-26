@@ -1,3 +1,2 @@
 # Chess
-A graphic chess game in java
-enjoy :)
+A graphic chess game in java :)
